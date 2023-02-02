@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.db import models
 from django_countries.fields import CountryField
 
-
 class UserAccountManager(BaseUserManager):
     def create_uer(self, email, username, first_name, last_name, number, password=None):
         if not email:
