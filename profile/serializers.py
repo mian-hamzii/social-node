@@ -1,13 +1,38 @@
-from django.contrib.auth.models import User
+from .models import User
 from rest_framework import serializers
 
-from profile.models import Function, Profile, Industry, Domain, CustomUser
+from profile.models import Function, Profile, Industry, Domain
+
+
+class CustomUserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name')
+        read_only_fields = ('email',)
 
 
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ['id', 'number']
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'is_active']
+
+
+class CustomRegisterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(write_only=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    phone = serializers.IntegerField(required=True)
+
+    def get_cleaned_data(self):
+        super().get_cleaned_data()
+
+        return {
+            'password' : self.validated_data.get('password',),
+            'email' : self.validated_data.get('email',),
+            'first_name' : self.validated_data.get('first-name',),
+            'last-name' : self.validated_data.get('last_name',),
+            'phone' : self.validated_data.get('phone',),
+        }
 
 
 class FunctionSerializer(serializers.ModelSerializer):

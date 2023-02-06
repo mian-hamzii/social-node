@@ -1,18 +1,15 @@
-from django.contrib.auth.models import User
-from rest_framework import authentication, permissions
-from rest_framework.generics import RetrieveAPIView, ListAPIView
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-
-# from profile.serializers import UserSerializer
-
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from rest_auth.registration.views import RegisterView
+from rest_framework import generics
+from rest_framework import mixins
 from rest_framework.authtoken.models import Token
-
-from profile.models import Function, Profile, CustomUser
-from profile.serializers import FunctionSerializer, ProfileSerializer, UserSerializer
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from profile.serializers import UserSerializer, FunctionSerializer, ProfileSerializer
+from .models import User, Function, Profile
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -21,18 +18,48 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
-class UserApi(ListAPIView):
-    queryset = CustomUser.objects.all()
+class CustomRegisterView(RegisterView):
+    queryset = User.objects.all()
+
+
+class UserAPIView(APIView):
+    @staticmethod
+    def get(requests):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
+
+class GenericUserAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
+                         mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+
+    lookup_field = 'id'
+
+    def get(self, request, id=None):
+        if id:
+            return self.retrieve(request)
+        else:
+            return self.list(request)
+
+    def post(self, request):
+        return self.create(request)
+
+    def put(self, request, id=None):
+        return self.update(request, id)
+
+    def delete(self, request, id):
+        return self.destroy(request, id)
 
 
 class FunctionListApi(ListAPIView):
     queryset = Function.objects.all()
     serializer_class = FunctionSerializer
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAdminUser]
+
+
+# authentication_classes = [authentication.TokenAuthentication]
+# permission_classes = [permissions.IsAdminUser]
 
 
 class ProfileListApi(ListAPIView):
@@ -46,29 +73,3 @@ class ProfileListApi(ListAPIView):
 class ProfileRetrieveApi(RetrieveAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
-# class UserList(RetrieveAPIView):
-#     # queryset = Profile.objects.all()
-#     # serializer_class = UserSerializer
-#     authentication_classes = [TokenAuthentication]
-#     permission_classes = [IsAuthenticatedOrReadOnly]
-
-
-# class UserDetail(generics.RetrieveAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-
-
-# class CustomAuthToken(ObtainAuthToken):
-#
-#     def post(self, request, *args, **kwargs):
-#         serializer = self.serializer_class(data=request.data,
-#                                            context={'request': request})
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.validated_data['user']
-#         token, created = Token.objects.get_or_create(user=user)
-#         return Response({
-#             'token': token.key,
-#             'user_id': user.pk,
-#             'email': user.email
-#         })

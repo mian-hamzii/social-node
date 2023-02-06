@@ -1,6 +1,7 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
-from profile.models import CustomUser, Otp, Industry, Domain, Function, Profile
+from profile.models import Otp, Industry, Domain, Function, Profile, User
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -20,7 +21,11 @@ class DomainAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-admin.site.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    """Custom user admin."""
+
+
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Otp)
 admin.site.register(Industry)
 admin.site.register(Domain, DomainAdmin)
