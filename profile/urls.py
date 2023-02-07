@@ -3,12 +3,12 @@ from . import views
 # from .views import CustomAuthToken
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import GenericUserAPIView, UserAPIView, CustomRegisterView
+from .views import UserAPIView, RegisterUserAPIView, CreateUserApi
 
 urlpatterns = [
-    path('users/', UserAPIView.as_view()),
-    path('user/<int:id>', GenericUserAPIView.as_view()),
-    path('register/', CustomRegisterView.as_view()),
+    path('users/', UserAPIView.as_view(), name='users'),
+    path('create-user/', CreateUserApi.as_view(), name='create-user'),
+    path('register/', RegisterUserAPIView.as_view()),
     # path("user-list/", views.UserApi.as_view(), name='user-list'),
     path("function-list/", views.FunctionListApi.as_view(), name='function'),
     path("profile-list/", views.ProfileListApi.as_view(), name='profile'),

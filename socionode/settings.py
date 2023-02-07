@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'allauth',
-
     'django_countries',
     'profile',
     'rest_framework',

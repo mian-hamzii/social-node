@@ -1,38 +1,52 @@
+from django.contrib.auth.password_validation import validate_password
+from rest_framework.validators import UniqueValidator
+
 from .models import User
 from rest_framework import serializers
 
 from profile.models import Function, Profile, Industry, Domain
 
 
-class CustomUserDetailSerializer(serializers.ModelSerializer):
+class RegisterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+    password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password])
+    password2 = serializers.CharField(write_only=True, required=True)
+
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name')
-        read_only_fields = ('email',)
+        fields = ('username', 'password', 'password2',
+                  'email', 'first_name', 'last_name')
+        extra_kwargs = {
+            'first_name': {'required': True},
+            'last_name': {'required': True}
+        }
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."})
+        return attrs
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 
 class UserSerializer(serializers.ModelSerializer):
-    model = User
-    fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'is_active']
-
-
-class CustomRegisterSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True)
-    password = serializers.CharField(write_only=True)
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
-    phone = serializers.IntegerField(required=True)
-
-    def get_cleaned_data(self):
-        super().get_cleaned_data()
-
-        return {
-            'password' : self.validated_data.get('password',),
-            'email' : self.validated_data.get('email',),
-            'first_name' : self.validated_data.get('first-name',),
-            'last-name' : self.validated_data.get('last_name',),
-            'phone' : self.validated_data.get('phone',),
-        }
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'password']
 
 
 class FunctionSerializer(serializers.ModelSerializer):
