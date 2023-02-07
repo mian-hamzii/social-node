@@ -39,24 +39,11 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+
     'django_countries',
     'profile',
     'rest_framework',
 ]
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAdminUser'
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-}
 
 CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
@@ -98,7 +85,7 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'socio_node',
+        'NAME': 's-ocionode',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',

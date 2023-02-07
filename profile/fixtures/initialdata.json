@@ -1,0 +1,711 @@
+[
+  {
+    "model": "profile.industry",
+    "pk": 25,
+    "fields": {
+      "name": "Choose Industry",
+      "created_at": "2023-02-06T13:34:35.982Z",
+      "updated_at": "2023-02-06T13:34:35.982Z"
+    }
+  },
+  {
+    "model": "profile.industry",
+    "pk": 26,
+    "fields": {
+      "name": "Information Technology",
+      "created_at": "2023-02-06T13:34:50.498Z",
+      "updated_at": "2023-02-06T13:34:50.498Z"
+    }
+  },
+  {
+    "model": "profile.industry",
+    "pk": 27,
+    "fields": {
+      "name": "Financial Services",
+      "created_at": "2023-02-06T13:35:04.049Z",
+      "updated_at": "2023-02-06T13:35:04.049Z"
+    }
+  },
+  {
+    "model": "profile.industry",
+    "pk": 28,
+    "fields": {
+      "name": "Healthcare",
+      "created_at": "2023-02-06T13:35:10.795Z",
+      "updated_at": "2023-02-06T13:35:10.795Z"
+    }
+  },
+  {
+    "model": "profile.industry",
+    "pk": 29,
+    "fields": {
+      "name": "Industrials",
+      "created_at": "2023-02-06T13:35:15.651Z",
+      "updated_at": "2023-02-06T13:35:15.651Z"
+    }
+  },
+  {
+    "model": "profile.industry",
+    "pk": 30,
+    "fields": {
+      "name": "Professional Services",
+      "created_at": "2023-02-06T13:35:21.709Z",
+      "updated_at": "2023-02-06T13:35:21.709Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 1,
+    "fields": {
+      "industry": 26,
+      "name": "Software Development",
+      "created_at": "2023-02-06T13:39:21.917Z",
+      "updated_at": "2023-02-06T13:39:21.917Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 2,
+    "fields": {
+      "industry": 26,
+      "name": "Cloud Service",
+      "created_at": "2023-02-06T13:39:29.684Z",
+      "updated_at": "2023-02-06T13:39:29.684Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 3,
+    "fields": {
+      "industry": 26,
+      "name": "Social Media",
+      "created_at": "2023-02-06T13:39:36.650Z",
+      "updated_at": "2023-02-06T13:39:36.650Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 4,
+    "fields": {
+      "industry": 26,
+      "name": "E-Commerce",
+      "created_at": "2023-02-06T13:39:43.244Z",
+      "updated_at": "2023-02-06T13:39:43.244Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 5,
+    "fields": {
+      "industry": 26,
+      "name": "Online Streaming",
+      "created_at": "2023-02-06T13:40:17.870Z",
+      "updated_at": "2023-02-06T13:40:17.870Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 6,
+    "fields": {
+      "industry": 26,
+      "name": "Telecommunication Equipment",
+      "created_at": "2023-02-06T13:40:24.870Z",
+      "updated_at": "2023-02-06T13:40:24.870Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 7,
+    "fields": {
+      "industry": 26,
+      "name": "Networking Equipment",
+      "created_at": "2023-02-06T13:40:31.205Z",
+      "updated_at": "2023-02-06T13:40:31.205Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 8,
+    "fields": {
+      "industry": 26,
+      "name": "Mobile Phones",
+      "created_at": "2023-02-06T13:40:39.885Z",
+      "updated_at": "2023-02-06T13:40:39.885Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 9,
+    "fields": {
+      "industry": 26,
+      "name": "Personal Computers",
+      "created_at": "2023-02-06T13:40:47.278Z",
+      "updated_at": "2023-02-06T13:40:47.278Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 10,
+    "fields": {
+      "industry": 26,
+      "name": "Electronic Equipment",
+      "created_at": "2023-02-06T13:40:53.824Z",
+      "updated_at": "2023-02-06T13:40:53.824Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 11,
+    "fields": {
+      "industry": 26,
+      "name": "Semiconductors",
+      "created_at": "2023-02-06T13:41:01.533Z",
+      "updated_at": "2023-02-06T13:41:01.533Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 12,
+    "fields": {
+      "industry": 27,
+      "name": "Retail Banking",
+      "created_at": "2023-02-06T13:41:12.155Z",
+      "updated_at": "2023-02-06T13:41:12.155Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 13,
+    "fields": {
+      "industry": 27,
+      "name": "Commercial Banking",
+      "created_at": "2023-02-06T13:41:19.057Z",
+      "updated_at": "2023-02-06T13:41:19.057Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 14,
+    "fields": {
+      "industry": 27,
+      "name": "Investment Banking",
+      "created_at": "2023-02-06T13:41:27.865Z",
+      "updated_at": "2023-02-06T13:41:27.865Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 15,
+    "fields": {
+      "industry": 27,
+      "name": "Asset Management",
+      "created_at": "2023-02-06T13:41:34.197Z",
+      "updated_at": "2023-02-06T13:41:34.197Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 16,
+    "fields": {
+      "industry": 27,
+      "name": "Fund Management",
+      "created_at": "2023-02-06T13:41:43.813Z",
+      "updated_at": "2023-02-06T13:41:43.813Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 17,
+    "fields": {
+      "industry": 27,
+      "name": "Venture Capital",
+      "created_at": "2023-02-06T13:41:51.122Z",
+      "updated_at": "2023-02-06T13:41:51.122Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 18,
+    "fields": {
+      "industry": 27,
+      "name": "Fintech",
+      "created_at": "2023-02-06T13:41:58.455Z",
+      "updated_at": "2023-02-06T13:41:58.455Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 19,
+    "fields": {
+      "industry": 28,
+      "name": "Healthcare Equipment",
+      "created_at": "2023-02-06T13:42:10.902Z",
+      "updated_at": "2023-02-06T13:42:10.902Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 20,
+    "fields": {
+      "industry": 28,
+      "name": "Healthcare Technology",
+      "created_at": "2023-02-06T13:42:19.839Z",
+      "updated_at": "2023-02-06T13:42:19.839Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 21,
+    "fields": {
+      "industry": 28,
+      "name": "Biotechnology",
+      "created_at": "2023-02-06T13:42:28.501Z",
+      "updated_at": "2023-02-06T13:42:28.501Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 22,
+    "fields": {
+      "industry": 28,
+      "name": "Pharmaceuticals",
+      "created_at": "2023-02-06T13:42:38.653Z",
+      "updated_at": "2023-02-06T13:42:38.653Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 23,
+    "fields": {
+      "industry": 28,
+      "name": "Life Sciences Tools & Services",
+      "created_at": "2023-02-06T13:42:47.556Z",
+      "updated_at": "2023-02-06T13:42:47.556Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 24,
+    "fields": {
+      "industry": 29,
+      "name": "Passenger Cars",
+      "created_at": "2023-02-06T13:43:00.151Z",
+      "updated_at": "2023-02-06T13:43:00.151Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 25,
+    "fields": {
+      "industry": 29,
+      "name": "Automotive Engines",
+      "created_at": "2023-02-06T13:43:06.524Z",
+      "updated_at": "2023-02-06T13:43:06.524Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 26,
+    "fields": {
+      "industry": 29,
+      "name": "Automotive Spare Parts",
+      "created_at": "2023-02-06T13:43:13.256Z",
+      "updated_at": "2023-02-06T13:43:13.256Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 27,
+    "fields": {
+      "industry": 29,
+      "name": "Industrial Machinery",
+      "created_at": "2023-02-06T13:43:19.605Z",
+      "updated_at": "2023-02-06T13:43:19.605Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 28,
+    "fields": {
+      "industry": 29,
+      "name": "Construction Machinery",
+      "created_at": "2023-02-06T13:43:26.272Z",
+      "updated_at": "2023-02-06T13:43:26.272Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 29,
+    "fields": {
+      "industry": 29,
+      "name": "Electrical Components & Equipment",
+      "created_at": "2023-02-06T13:43:33.523Z",
+      "updated_at": "2023-02-06T13:43:33.523Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 30,
+    "fields": {
+      "industry": 29,
+      "name": "Construction & Engineering",
+      "created_at": "2023-02-06T13:43:40.754Z",
+      "updated_at": "2023-02-06T13:43:40.754Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 31,
+    "fields": {
+      "industry": 30,
+      "name": "Human Resource & Employment Services",
+      "created_at": "2023-02-06T13:43:52.767Z",
+      "updated_at": "2023-02-06T13:43:52.767Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 32,
+    "fields": {
+      "industry": 30,
+      "name": "Legal Services",
+      "created_at": "2023-02-06T13:43:59.123Z",
+      "updated_at": "2023-02-06T13:43:59.123Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 33,
+    "fields": {
+      "industry": 30,
+      "name": "Tax & Accounting Services",
+      "created_at": "2023-02-06T13:44:09.281Z",
+      "updated_at": "2023-02-06T13:44:09.281Z"
+    }
+  },
+  {
+    "model": "profile.domain",
+    "pk": 34,
+    "fields": {
+      "industry": 30,
+      "name": "Business Consulting",
+      "created_at": "2023-02-06T13:44:15.940Z",
+      "updated_at": "2023-02-06T13:44:15.940Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 1,
+    "fields": {
+      "name": "General Business Management",
+      "created_at": "2023-02-06T13:35:40.364Z",
+      "updated_at": "2023-02-06T13:35:40.364Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 2,
+    "fields": {
+      "name": "Finance",
+      "created_at": "2023-02-06T13:35:46.997Z",
+      "updated_at": "2023-02-06T13:35:46.997Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 3,
+    "fields": {
+      "name": "Accounting",
+      "created_at": "2023-02-06T13:35:52.235Z",
+      "updated_at": "2023-02-06T13:35:52.235Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 4,
+    "fields": {
+      "name": "Audit",
+      "created_at": "2023-02-06T13:35:56.869Z",
+      "updated_at": "2023-02-06T13:35:56.869Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 5,
+    "fields": {
+      "name": "Tax",
+      "created_at": "2023-02-06T13:36:01.785Z",
+      "updated_at": "2023-02-06T13:36:01.785Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 6,
+    "fields": {
+      "name": "HR",
+      "created_at": "2023-02-06T13:36:06.611Z",
+      "updated_at": "2023-02-06T13:36:06.611Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 7,
+    "fields": {
+      "name": "Legal",
+      "created_at": "2023-02-06T13:36:10.568Z",
+      "updated_at": "2023-02-06T13:36:10.568Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 8,
+    "fields": {
+      "name": "Compliance",
+      "created_at": "2023-02-06T13:36:16.111Z",
+      "updated_at": "2023-02-06T13:36:16.111Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 9,
+    "fields": {
+      "name": "IT",
+      "created_at": "2023-02-06T13:36:21.219Z",
+      "updated_at": "2023-02-06T13:36:21.219Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 10,
+    "fields": {
+      "name": "Communications",
+      "created_at": "2023-02-06T13:36:27.642Z",
+      "updated_at": "2023-02-06T13:36:27.642Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 11,
+    "fields": {
+      "name": "Research",
+      "created_at": "2023-02-06T13:36:32.435Z",
+      "updated_at": "2023-02-06T13:36:32.435Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 12,
+    "fields": {
+      "name": "Analysis",
+      "created_at": "2023-02-06T13:36:36.365Z",
+      "updated_at": "2023-02-06T13:36:36.365Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 13,
+    "fields": {
+      "name": "Product Management",
+      "created_at": "2023-02-06T13:36:40.868Z",
+      "updated_at": "2023-02-06T13:36:40.868Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 14,
+    "fields": {
+      "name": "Project Management",
+      "created_at": "2023-02-06T13:36:45.095Z",
+      "updated_at": "2023-02-06T13:36:45.095Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 15,
+    "fields": {
+      "name": "Development & Engineering",
+      "created_at": "2023-02-06T13:36:49.887Z",
+      "updated_at": "2023-02-06T13:36:49.887Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 16,
+    "fields": {
+      "name": "Procurement",
+      "created_at": "2023-02-06T13:36:54.628Z",
+      "updated_at": "2023-02-06T13:36:54.628Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 17,
+    "fields": {
+      "name": "Logistics",
+      "created_at": "2023-02-06T13:36:58.959Z",
+      "updated_at": "2023-02-06T13:36:58.959Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 18,
+    "fields": {
+      "name": "Production & Manufacturing",
+      "created_at": "2023-02-06T13:37:03.947Z",
+      "updated_at": "2023-02-06T13:37:03.947Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 19,
+    "fields": {
+      "name": "Quality Assurance & Control",
+      "created_at": "2023-02-06T13:37:08.696Z",
+      "updated_at": "2023-02-06T13:37:08.696Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 20,
+    "fields": {
+      "name": "Business Operations",
+      "created_at": "2023-02-06T13:37:15.048Z",
+      "updated_at": "2023-02-06T13:37:15.048Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 21,
+    "fields": {
+      "name": "Sales & Client Relationship",
+      "created_at": "2023-02-06T13:37:19.036Z",
+      "updated_at": "2023-02-06T13:37:19.036Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 22,
+    "fields": {
+      "name": "Marketing",
+      "created_at": "2023-02-06T13:37:23.406Z",
+      "updated_at": "2023-02-06T13:37:23.406Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 23,
+    "fields": {
+      "name": "Banking",
+      "created_at": "2023-02-06T13:37:28.286Z",
+      "updated_at": "2023-02-06T13:37:28.286Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 24,
+    "fields": {
+      "name": "Loan Processing",
+      "created_at": "2023-02-06T13:37:32.497Z",
+      "updated_at": "2023-02-06T13:37:32.497Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 25,
+    "fields": {
+      "name": "Credit Analysis",
+      "created_at": "2023-02-06T13:37:38.431Z",
+      "updated_at": "2023-02-06T13:37:38.431Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 26,
+    "fields": {
+      "name": "Financial Advisory",
+      "created_at": "2023-02-06T13:37:43.946Z",
+      "updated_at": "2023-02-06T13:37:43.946Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 27,
+    "fields": {
+      "name": "Investment Banking",
+      "created_at": "2023-02-06T13:37:48.233Z",
+      "updated_at": "2023-02-06T13:37:48.233Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 28,
+    "fields": {
+      "name": "Underwriting",
+      "created_at": "2023-02-06T13:37:53.429Z",
+      "updated_at": "2023-02-06T13:37:53.429Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 29,
+    "fields": {
+      "name": "Asset Management",
+      "created_at": "2023-02-06T13:37:59.048Z",
+      "updated_at": "2023-02-06T13:37:59.048Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 30,
+    "fields": {
+      "name": "Fund Management",
+      "created_at": "2023-02-06T13:38:03.550Z",
+      "updated_at": "2023-02-06T13:38:03.550Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 31,
+    "fields": {
+      "name": "Consultant",
+      "created_at": "2023-02-06T13:38:08.248Z",
+      "updated_at": "2023-02-06T13:38:08.248Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 32,
+    "fields": {
+      "name": "Audit",
+      "created_at": "2023-02-06T13:38:14.698Z",
+      "updated_at": "2023-02-06T13:38:14.698Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 33,
+    "fields": {
+      "name": "Tax Advisory",
+      "created_at": "2023-02-06T13:38:19.071Z",
+      "updated_at": "2023-02-06T13:38:19.071Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 34,
+    "fields": {
+      "name": "Lawyer",
+      "created_at": "2023-02-06T13:38:23.904Z",
+      "updated_at": "2023-02-06T13:38:23.904Z"
+    }
+  },
+  {
+    "model": "profile.function",
+    "pk": 35,
+    "fields": {
+      "name": "HR Consulting",
+      "created_at": "2023-02-06T13:38:28.422Z",
+      "updated_at": "2023-02-06T13:38:28.422Z"
+    }
+  }
+]
