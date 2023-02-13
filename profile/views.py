@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from rest_framework import generics, status, permissions, authentication
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication, SessionAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -25,16 +25,13 @@ schema_view = get_swagger_view(title='Pastebin API')
 
 
 class UserAPI(APIView):
+    authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
     def get(self, request):
-        is_registered = User.objects.filter(email=request.data.get('email'), password=request.data.get('password')).exists()
-        content = {
-            # 'email': request.data.get('email'),  # `django.contrib.auth.User` instance.
-            # 'password': request.data.get('password'),  # `django.contrib.auth.User` instance.
-            "valid_user": is_registered
-        }
-        return Response(content)
+        is_registered = get_object_or_404(User, id=request.user.id)
+        serializer = UserSerializer(is_registered)
+        return Response(serializer.data)
 
 
 class RegisterUserAPIView(CreateAPIView):
