@@ -1,16 +1,17 @@
 from django.conf import settings
+from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from rest_auth.registration.views import RegisterView
-from rest_framework import generics
-from rest_framework import mixins
-from rest_framework.authentication import TokenAuthentication
+from rest_framework import generics, status, permissions, authentication
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication, SessionAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from profile.serializers import UserSerializer, FunctionSerializer, ProfileSerializer, RegisterSerializer
+from rest_framework_swagger.views import get_swagger_view
+
+from profile.serializers import FunctionSerializer, ProfileSerializer, RegisterSerializer, UserSerializer
 from .models import User, Function, Profile
 
 
@@ -20,23 +21,24 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
-class UserAPIView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    @staticmethod
-    def get(requests):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+schema_view = get_swagger_view(title='Pastebin API')
 
 
-class CreateUserApi(CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class UserAPI(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request):
+        is_registered = User.objects.filter(email=request.data.get('email'), password=request.data.get('password')).exists()
+        content = {
+            # 'email': request.data.get('email'),  # `django.contrib.auth.User` instance.
+            # 'password': request.data.get('password'),  # `django.contrib.auth.User` instance.
+            "valid_user": is_registered
+        }
+        return Response(content)
 
 
 class RegisterUserAPIView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
 
 

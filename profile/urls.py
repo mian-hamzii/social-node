@@ -1,19 +1,18 @@
+from django.conf.urls import url
 from django.urls import path
+
 from . import views
 # from .views import CustomAuthToken
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import UserAPIView, RegisterUserAPIView, CreateUserApi
+from .views import RegisterUserAPIView, UserAPI, schema_view
 
 urlpatterns = [
-    path('users/', UserAPIView.as_view(), name='users'),
-    path('create-user/', CreateUserApi.as_view(), name='create-user'),
+    url(r'^$', schema_view),
+    path('login/', UserAPI.as_view()),
     path('register/', RegisterUserAPIView.as_view()),
-    # path("user-list/", views.UserApi.as_view(), name='user-list'),
     path("function-list/", views.FunctionListApi.as_view(), name='function'),
     path("profile-list/", views.ProfileListApi.as_view(), name='profile'),
     path("profile-retrieve/<int:pk>", views.ProfileRetrieveApi.as_view(), name='profile-retrieve'),
-    # path("users/<int:pk>", views.UserDetail.as_view(), name='user_detail'),
-    # path('api-token-auth/', CustomAuthToken.as_view()),
-    # path('gettoken/', obtain_auth_token)
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
