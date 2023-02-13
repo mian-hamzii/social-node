@@ -1,15 +1,14 @@
-from django.conf.urls import url
+from dj_rest_auth.views import LoginView
 from django.urls import path
 
 from . import views
 # from .views import CustomAuthToken
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import RegisterUserAPIView, UserAPI, schema_view
+from .views import RegisterUserAPIView, schema_view
 
 urlpatterns = [
-    url(r'^$', schema_view),
-    path('login/', UserAPI.as_view()),
+    path('login/', LoginView.as_view(), name='rest_login'),
     path('register/', RegisterUserAPIView.as_view()),
     path("function-list/", views.FunctionListApi.as_view(), name='function'),
     path("profile-list/", views.ProfileListApi.as_view(), name='profile'),

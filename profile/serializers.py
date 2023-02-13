@@ -1,3 +1,4 @@
+from dj_rest_auth.serializers import LoginSerializer
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.validators import UniqueValidator
 
@@ -43,7 +44,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(LoginSerializer):
     class Meta:
         model = User
         fields = ['email', 'password']

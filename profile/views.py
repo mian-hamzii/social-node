@@ -1,11 +1,14 @@
+from dj_rest_auth.serializers import LoginSerializer
+from dj_rest_auth.views import LoginView
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework import generics, status, permissions, authentication
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication, SessionAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, get_object_or_404
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -24,16 +27,6 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 schema_view = get_swagger_view(title='Pastebin API')
 
 
-class UserAPI(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (AllowAny,)
-
-    def get(self, request):
-        user = User.objects.get(id=request.user.id)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-
-
 class RegisterUserAPIView(CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
@@ -42,10 +35,6 @@ class RegisterUserAPIView(CreateAPIView):
 class FunctionListApi(ListAPIView):
     queryset = Function.objects.all()
     serializer_class = FunctionSerializer
-
-
-# authentication_classes = [authentication.TokenAuthentication]
-# permission_classes = [permissions.IsAdminUser]
 
 
 class ProfileListApi(ListAPIView):
