@@ -29,8 +29,8 @@ class UserAPI(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request):
-        is_registered = get_object_or_404(User, id=request.user.id)
-        serializer = UserSerializer(is_registered)
+        user = User.objects.get(id=request.user.id)
+        serializer = UserSerializer(user)
         return Response(serializer.data)
 
 

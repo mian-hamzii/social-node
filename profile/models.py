@@ -1,11 +1,21 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
+from django.db.models import Manager
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django_countries.fields import CountryField
 
 
 class User(AbstractUser):
-    pass
+    email = models.EmailField(max_length=254, unique=True)
+    password = models.CharField(max_length=100)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = Manager()
+
+    def __str__(self):
+        return self.email
 
 
 class Otp(models.Model):
