@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_auth.registration',
+    # 'rest_auth.registration',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'dj_rest_auth.registration',
     'corsheaders',
     'dj_rest_auth',
     'allauth',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'profile',
     'rest_framework',
 ]
+SITE_ID = 1
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -57,6 +59,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'path.to.custom.LoginSerializer',
+    'TOKEN_SERIALIZER': 'path.to.custom.TokenSerializer',
 }
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
@@ -85,7 +91,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
-# WSGIPassAuthorization = 'On'
 CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -99,7 +104,6 @@ MIDDLEWARE = [
 
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 ROOT_URLCONF = 'socionode.urls'
 
 TEMPLATES = [
@@ -125,15 +129,13 @@ REST_AUTH = {
     'JWT_AUTH_HTTPONLY': False,
 }
 
-# WSGI_APPLICATION = 'profile'
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'so-c-ionode',
+        'NAME': 'socionode_db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -160,6 +162,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://0.0.0.0:8000",
+    "http://192.168.1.122:3000",
 ]
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -183,8 +186,9 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = smtplib.SMTP('smtp.gmail.com:587')
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'EMAIL'
-# EMAIL_HOST_PASSWORD = 'PASSWORD'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'kalamehamza@gmail.com'
+EMAIL_HOST_PASSWORD = 'zbquzzgcikjguwpp'

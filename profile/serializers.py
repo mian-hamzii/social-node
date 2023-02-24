@@ -1,53 +1,68 @@
+from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import LoginSerializer
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.validators import UniqueValidator
-
-from .models import User
+from .models import User, Otp
 from rest_framework import serializers
-
 from profile.models import Function, Profile, Industry, Domain
+from django.conf import settings
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
+from django.urls import exceptions as url_exceptions
+from django.utils.encoding import force_str
+from django.utils.translation import gettext_lazy as _
+from rest_framework import exceptions, serializers
+from rest_framework.exceptions import ValidationError
+
+# Get the UserModel
+UserModel = get_user_model()
 
 
-class RegisterSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
-        required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-    password = serializers.CharField(
-        write_only=True, required=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True, required=True)
+class SignUpSerializer(RegisterSerializer):
+    # username = serializers.EmailField(
+    #     required=True,
+    #     validators=[UniqueValidator(queryset=User.objects.all())]
+    # )
+    email = None
+    first_name = serializers.CharField(max_length=50)
+    last_name = serializers.CharField(max_length=50)
 
-    class Meta:
-        model = User
-        fields = ('username', 'password', 'password2',
-                  'email', 'first_name', 'last_name')
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True}
+    def get_cleaned_data(self):
+        return {
+            'username': self.validated_data.get('username', ''),
+            'password1': self.validated_data.get('password1', ''),
+            'email': self.validated_data.get('email', ''),
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
         }
 
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError(
-                {"password": "Password fields didn't match."})
-        return attrs
-
-    def create(self, validated_data):
-        user = User.objects.create(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name']
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
+    #
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
 
 
 class UserSerializer(LoginSerializer):
+    email = None
+
     class Meta:
         model = User
-        fields = ['email', 'password']
+        fields = ['username', 'password']
+
+
+class VerifyAccountSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    otp = serializers.CharField(max_length=10)
+
+
+class ResendOtpSerializer(serializers.Serializer):
+    username = serializers.CharField()
+
+
+class OtpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Otp
+        fields = ['code']
 
 
 class FunctionSerializer(serializers.ModelSerializer):

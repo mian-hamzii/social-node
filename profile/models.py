@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser, UserManager
 from django.db.models import Manager
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -6,14 +6,23 @@ from django_countries.fields import CountryField
 
 
 class User(AbstractUser):
-    pass
+    username = models.EmailField(unique=True, null=True)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
+
+    def name(self):
+        return self.first_name + ' ' + self.last_name
+
+    def __str__(self):
+        return self.username
 
 
 class Otp(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     code = models.CharField(max_length=6)
     created_on = models.DateTimeField(auto_now_add=True)
-    expire = models.DateTimeField(auto_now=True)
+    expire = models.DateTimeField()
 
 
 class Industry(models.Model):

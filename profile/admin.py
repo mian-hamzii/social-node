@@ -23,6 +23,7 @@ class DomainAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(UserAdmin):
     """Custom user admin."""
+    ordering = ['username']
 
 
 admin.site.register(User, CustomUserAdmin)
