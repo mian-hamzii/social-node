@@ -1,32 +1,27 @@
 import datetime
-import random
-import time
-from datetime import date
 
+import pytz
 from dj_rest_auth.registration.views import RegisterView
-from dj_rest_auth.serializers import LoginSerializer
-from dj_rest_auth.views import LoginView
+from dj_rest_auth.views import LoginView, PasswordResetView
 from django.conf import settings
-from django.contrib.auth import get_user_model, login, authenticate
-from django.core.mail import send_mail
+from django.contrib.auth import login, authenticate
+from django.db.models import Q, Prefetch
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.http import JsonResponse
-from django.utils import timezone
-from rest_framework import generics, status, permissions, authentication
-from rest_framework.authentication import TokenAuthentication, BasicAuthentication, SessionAuthentication
+from rest_framework import permissions
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.generics import ListAPIView, CreateAPIView, get_object_or_404, RetrieveUpdateAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_swagger.views import get_swagger_view
 
-from profile.serializers import FunctionSerializer, ProfileSerializer, UserSerializer, RegisterSerializer, \
-    VerifyAccountSerializer, SignUpSerializer, ResendOtpSerializer
+from profile.serializers import ProfileSerializer, UserSerializer, VerifyAccountSerializer, SignUpSerializer, \
+    ResendOtpSerializer
+from situation.models import Invite
 from .email import send_email_via_otp
-from .models import User, Function, Profile, Otp
-import pytz
+from .models import User, Profile, Otp, Industry
 
 utc = pytz.UTC
 
@@ -128,10 +123,16 @@ class ResendOtpAPI(APIView):
         serializer = ResendOtpSerializer(data=data)
         if serializer.is_valid():
             username = serializer.data['username']
-            user_exist = User.objects.get(username=username).id
-            otp_validate = Otp.objects.get(user_id=user_exist)
+            user_exist = User.objects.filter(username=username).first()
+            if not user_exist:
+                return Response({
+                    'status': 400,
+                    'message': 'something went wrong',
+                    'data': 'invalid email'
+                })
+            otp_validate = Otp.objects.filter(user_id=user_exist.id).first()
             otp_validate.delete()
-            send_email_via_otp(username, user_exist)
+            send_email_via_otp(username, user_exist.id)
             return Response({
                 'status': 200,
                 'message': 'Successfully send Otp',
@@ -139,19 +140,78 @@ class ResendOtpAPI(APIView):
             })
 
 
-class FunctionListApi(ListAPIView):
-    queryset = Function.objects.all()
-    serializer_class = FunctionSerializer
+# class ForgotPasswordAPI(PasswordResetView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#     permission_classes = (AllowAny,)
+#
+#     def post(self, request, *args, **kwargs):
+#         data = request.data
+#         serializer = UserSerializer(data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             username = serializer.data['username']
+
+
+class UserListApi(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        user = User.objects.filter(Q(profile__domain=self.request.user.profile_set.first().domain) |
+                                   Q(profile__choice_function=self.request.user.profile_set.first().choice_function) |
+                                   Q(profile__career_stage=self.request.user.profile_set.first().career_stage) |
+                                   Q(profile__Organization_Size=self.request.user.profile_set.first().Organization_Size)
+                                   ).exclude(profile__user=self.request.user)
+        serializer1 = self.serializer_class(user, many=True)
+        Serializer_list = [serializer1.data]
+        return Response(Serializer_list)
+
+
+class UserRetrieveApi(RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+
+class ProfileCreateAPI(CreateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    authentication_classes = (SessionAuthentication, TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        industry = get_object_or_404(Industry, domain=self.request.data['domain'])
+        return serializer.save(industry=industry, user=self.request.user)
 
 
 class ProfileListApi(ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    authentication_classes = (SessionAuthentication, TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get_name(self, profile):
         return profile.name.name
 
+    def get_queryset(self):
+        return Profile.objects.filter(user__profile=self.request.user.profile_set.first())
 
-class ProfileRetrieveApi(RetrieveAPIView):
+
+# class ProfileRetrieveApi(RetrieveAPIView):
+#     queryset = Profile.objects.all()
+#     serializer_class = ProfileSerializer
+#     authentication_classes = [SessionAuthentication, TokenAuthentication]
+#     permission_classes = [permissions.IsAuthenticated]
+
+
+class ProfileUpdateAPI(RetrieveUpdateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    authentication_classes = (SessionAuthentication, TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)

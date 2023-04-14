@@ -5,7 +5,7 @@ from profile.models import Otp, Industry, Domain, Function, Profile, User
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['industry', 'domain', 'function', 'career_stage', 'Organization_Size', 'countries']
+    list_display = ['industry', 'domain', 'choice_function', 'career_stage', 'Organization_Size', 'countries']
     autocomplete_fields = ('domain',)
     exclude = ['industry']
 
@@ -32,5 +32,3 @@ admin.site.register(Industry)
 admin.site.register(Domain, DomainAdmin)
 admin.site.register(Function)
 admin.site.register(Profile, ProfileAdmin)
-
-

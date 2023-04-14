@@ -53,28 +53,26 @@ class Function(models.Model):
         return self.name
 
 
-CHOICE = (
-    ("Choose Career Stage", "Choose Career Stage"),
-    ("Entry Level", "Entry Level"),
-    ("Junior Level", "Junior Level"),
-    ("Middle Level", "Middle Level"),
-    ("Senior Level", "Senior Level"),
-)
-
-CHOICES = (
-    ("Organization Size", "Organization Size"),
-    ("Entry Level", "Entry Level"),
-    ("Junior Level", "Junior Level"),
-    ("Middle Level", "Middle Level"),
-    ("Senior Level", "Senior Level"),
-)
-
-
 class Profile(models.Model):
+    organization_size_choice = (
+        ("100", "100"),
+        ("100-1000", "100-1000"),
+        ("1000 - 10000", "1000 - 10000"),
+        ("10000", "10000"),
+    )
+    JUNIOR = "junior"
+    MIDDLE = "middle"
+    SENIOR = "senior"
+    career_stage_choice = (
+        ("Choose Career Stage", "Choose Career Stage"),
+        (JUNIOR, "junior"),
+        (MIDDLE, "middle"),
+        (SENIOR, "senior"),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True, blank=True)
     domain = models.ForeignKey(Domain, on_delete=models.CASCADE)
-    function = models.ForeignKey(Function, on_delete=models.CASCADE)
-    career_stage = models.CharField(max_length=25, choices=CHOICE, default='Choose Career Stage')
-    Organization_Size = models.CharField(max_length=25, choices=CHOICES, default='Organization Size')
+    choice_function = models.ForeignKey(Function, on_delete=models.CASCADE)
+    career_stage = models.CharField(max_length=25, choices=career_stage_choice, default='Choose Career Stage')
+    Organization_Size = models.CharField(max_length=25, choices=organization_size_choice, default='Organization Size')
     countries = CountryField()
-    verify = models.BooleanField(default=False)

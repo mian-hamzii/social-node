@@ -14,6 +14,9 @@ from datetime import timedelta
 # import smtplib
 from pathlib import Path
 
+from django.core.checks import templates
+from django.core.management import templates
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,17 +49,21 @@ INSTALLED_APPS = [
     'allauth',
     'rest_framework_swagger',
     'django_countries',
+    'situation',
     'profile',
     'rest_framework',
 ]
 SITE_ID = 1
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
     ],
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
@@ -92,6 +99,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -135,7 +143,7 @@ REST_AUTH = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'socionode_db',
+        'NAME': 'socionode_db2',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -160,6 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': f"{AUTH_PWD_MODULE}NumericPasswordValidator",
     },
 ]
+
 CORS_ALLOWED_ORIGINS = [
     "http://0.0.0.0:8000",
     "http://192.168.1.122:3000",
