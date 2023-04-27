@@ -6,10 +6,10 @@ from . import views
 # from .views import CustomAuthToken
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import RegisterUserAPIView, schema_view, VerifyOtp, ResendOtpAPI, ProfileUpdateAPI, Login
+from .views import RegisterUserAPIView, schema_view, VerifyOtp, ResendOtpAPI, ProfileUpdateAPI
 
 urlpatterns = [
-    path('login/', Login.as_view(), name='rest_login'),
+    path('login/', LoginView.as_view(), name='rest_login'),
     path('verify/', VerifyOtp.as_view()),
     path('resend/', ResendOtpAPI.as_view()),
     path('register/', RegisterUserAPIView.as_view()),

@@ -18,6 +18,7 @@ class SignUpSerializer(RegisterSerializer):
     email = None
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
+    access_token = serializers.CharField(max_length=255, read_only=True)
 
     def get_cleaned_data(self):
         return {
@@ -26,12 +27,13 @@ class SignUpSerializer(RegisterSerializer):
             'email': self.validated_data.get('email', ''),
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
+            'access_token': self.validated_data.get('access_token', ''),
         }
 
     #
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'password1', 'password2', 'access_token']
 
 
 class UserSerializer(LoginSerializer):

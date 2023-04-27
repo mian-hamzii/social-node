@@ -35,42 +35,14 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 schema_view = get_swagger_view(title='Pastebin API')
 
 
-class Login(LoginView):
-
-    def post(self, request, *args, **kwargs):
-        email = request.data.get('username')
-        password = request.data.get('password')
-
-        if email and password:
-            user = authenticate(username=email, password=password)
-            if user:
-                login(request, user)
-                serialized_user = UserSerializer(user)
-                token, created = Token.objects.get_or_create(user=user)
-                return Response({'user': serialized_user.data, 'token': token.key})
-
-        return Response({'error': 'Invalid email or password'}, status=400)
-
-
 class RegisterUserAPIView(RegisterView):
     permission_classes = (AllowAny,)
     serializer_class = SignUpSerializer
 
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        user_name_id = data['username']
-        serializer = SignUpSerializer(data=data)
-        serializer.is_valid()
-        serializer.save(request=request)
-        user_info = serializer.data
-        user_info.update({'password': serializer.cleaned_data['password1']})
-        user_id = User.objects.get(username__exact=user_name_id)
-        send_email_via_otp(user_name_id, user_id.id)
-        return Response({
-            'status': 200,
-            'message': 'registration successfully check email',
-            'user': user_info,
-        })
+    def perform_create(self, serializer):
+        user = serializer.save(self.request)
+        send_email_via_otp(user, user.id)
+        return user
 
 
 class VerifyOtp(APIView):
@@ -140,19 +112,6 @@ class ResendOtpAPI(APIView):
             })
 
 
-# class ForgotPasswordAPI(PasswordResetView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = (AllowAny,)
-#
-#     def post(self, request, *args, **kwargs):
-#         data = request.data
-#         serializer = UserSerializer(data=data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             username = serializer.data['username']
-
-
 class UserListApi(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -201,13 +160,6 @@ class ProfileListApi(ListAPIView):
 
     def get_queryset(self):
         return Profile.objects.filter(user__profile=self.request.user.profile_set.first())
-
-
-# class ProfileRetrieveApi(RetrieveAPIView):
-#     queryset = Profile.objects.all()
-#     serializer_class = ProfileSerializer
-#     authentication_classes = [SessionAuthentication, TokenAuthentication]
-#     permission_classes = [permissions.IsAuthenticated]
 
 
 class ProfileUpdateAPI(RetrieveUpdateAPIView):
