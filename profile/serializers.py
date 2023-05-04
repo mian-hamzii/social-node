@@ -11,10 +11,6 @@ UserModel = get_user_model()
 
 
 class SignUpSerializer(RegisterSerializer):
-    # username = serializers.EmailField(
-    #     required=True,
-    #     validators=[UniqueValidator(queryset=User.objects.all())]
-    # )
     email = None
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
